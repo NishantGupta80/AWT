@@ -1,0 +1,57 @@
+REDUX
+
+There are three things 
+
+ACTIONS - Events->Dispatch
+
+Store-   (existing state)
+
+Reducer-  (existing state, action) event handler return the update state , Store
+
+
+
+Design a store (objects)
+define ACTIONS
+reducer
+setup store
+
+1.Desing a store(obj)structure
+Bug Tracking todo
+[
+    {
+        id:number,
+        description:string,
+        resolved:boolean
+    }
+]
+ //1 reducer
+//shopping
+{
+    carts:[
+        {}
+    ]
+    currentuser:{}
+    categories:{}
+}
+
+//3 slices ,3 reducer
+
+ 2>(setup the action)
+ Add bug,resolve bug,delete bug
+ action=>obj->flux
+ {
+    type:"add_bug"
+    payload:{
+    description:"first bug"
+}
+ }
+
+
+
+ 3>reducer->function->state,action
+ existing state
+ what happened-objects
+ return update state->store
+
+
+ 4>setup the store

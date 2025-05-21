@@ -1,0 +1,70 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #e6f7ff;
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  max-width: 600px;
+  margin: auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+h1 {
+  color: #0077b6;
+}
+
+.add-form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.add-form input {
+  padding: 0.5rem;
+  width: 60%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-form button {
+  padding: 0.5rem 1rem;
+  margin-left: 0.5rem;
+  border: none;
+  background-color: #00b4d8;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-form button:hover {
+  background-color: #0096c7;
+}
+
+.place-list {
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.place-item {
+  padding: 0.5rem;
+  margin: 0.3rem 0;
+  background-color: #ffffff;
+  border-left: 5px solid #00b4d8;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.place-item.visited {
+  background-color: #d9f7be;
+  text-decoration: line-through;
+  color: #555;
+}
+
+.stats {
+  margin: 1rem 0;
+  font-weight: bold;
+}

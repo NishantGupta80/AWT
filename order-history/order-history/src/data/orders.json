@@ -1,0 +1,22 @@
+[
+  {
+    "name": "First Product",
+    "price": 60,
+    "ordernumber": "23E3015",
+    "purchasedon": "01 March 2021",
+    "image": "https://themes.programmingkit.xyz/rafcart/assets/images/product8.jpg",
+    "quantity": 2,
+    "total": 120,
+    "status": "Cancelled"
+  },
+  {
+    "name": "First Product",
+    "price": 50,
+    "ordernumber": "23E3015",
+    "purchasedon": "01 March 2021",
+    "image": "https://themes.programmingkit.xyz/rafcart/assets/images/product9.jpg",
+    "quantity": 3,
+    "total": 150,
+    "status": "Delivered"
+  }
+]

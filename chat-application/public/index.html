@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>One-to-One Chat</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    #chat { border: 1px solid #ccc; height: 300px; overflow-y: auto; padding: 10px; }
+    #users { margin-bottom: 10px; }
+    #messageInput { width: 70%; }
+    #toUser { width: 25%; }
+  </style>
+</head>
+<body>
+  <h2>One-to-One Chat</h2>
+
+  <div id="loginDiv">
+    <input type="text" id="usernameInput" placeholder="Enter your username" />
+    <button id="joinBtn">Join Chat</button>
+  </div>
+
+  <div id="chatDiv" style="display:none;">
+    <div id="users"><b>Users online:</b> <span id="userList"></span></div>
+    <div id="chat"></div>
+    <input type="text" id="toUser" placeholder="Send to username" />
+    <input type="text" id="messageInput" placeholder="Enter message" />
+    <button id="sendBtn">Send</button>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    const loginDiv = document.getElementById('loginDiv');
+    const chatDiv = document.getElementById('chatDiv');
+    const usernameInput = document.getElementById('usernameInput');
+    const joinBtn = document.getElementById('joinBtn');
+    const userListSpan = document.getElementById('userList');
+    const chat = document.getElementById('chat');
+    const toUserInput = document.getElementById('toUser');
+    const messageInput = document.getElementById('messageInput');
+    const sendBtn = document.getElementById('sendBtn');
+
+    let username = null;
+    let users = [];
+
+    joinBtn.onclick = () => {
+      const name = usernameInput.value.trim();
+      if (!name) return alert('Please enter a username');
+      username = name;
+      socket.emit('join', username);
+
+      loginDiv.style.display = 'none';
+      chatDiv.style.display = 'block';
+    };
+
+    // Update users list and show join/leave notifications
+    function updateUsers() {
+      userListSpan.textContent = users.filter(u => u !== username).join(', ') || 'No one else online';
+    }
+
+    socket.on('user-connected', (user) => {
+      users.push(user);
+      updateUsers();
+      addMessage(`* ${user} connected *`);
+    });
+
+    socket.on('user-disconnected', (user) => {
+      users = users.filter(u => u !== user);
+      updateUsers();
+      addMessage(`* ${user} disconnected *`);
+    });
+
+    socket.on('private-message', ({ from, message }) => {
+      addMessage(`${from} (private): ${message}`);
+    });
+
+    sendBtn.onclick = () => {
+      const to = toUserInput.value.trim();
+      const message = messageInput.value.trim();
+      if (!to || !message) return alert('Please enter recipient username and message');
+
+      addMessage(`You to ${to}: ${message}`);
+      socket.emit('private-message', { to, message });
+      messageInput.value = '';
+    };
+
+    function addMessage(msg) {
+      const div = document.createElement('div');
+      div.textContent = msg;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    // Initialize users with self on join
+    socket.on('connect', () => {
+      if (username) {
+        socket.emit('join', username);
+      }
+    });
+  </script>
+</body>
+</html>
